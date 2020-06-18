@@ -1,0 +1,72 @@
+1. SELECT DISTINCT ligne FROM Routes
+2. SELECT DISTINCT commune FROM Arrets;
+3. SELECT nom FROM Arrets WHERE commune = "La Fouillouse";
+
+4.
+SELECT Routes.ligne, Routes.ordre_arret, Arrets.nom, Arrets.commune
+	FROM Routes 
+	JOIN Arrets ON Routes.id_arret = Arrets.id;
+
+5.
+SELECT Routes.ordre_arret, Arrets.nom, Arrets.commune
+	FROM Routes 
+	JOIN Arrets ON Routes.id_arret = Arrets.id
+    WHERE Routes.ligne = 10;
+6.
+SELECT Routes.ligne 
+	FROM Routes 
+	JOIN Arrets ON Routes.id_arret = Arrets.id 
+	WHERE Arrets.nom = "Grand Gonnet";
+
+7.
+SELECT DISTINCT Arrets.nom 
+	FROM Routes 
+	JOIN Arrets ON Routes.id_arret = Arrets.id 
+	WHERE Routes.ordre_arret = 1;
+
+8.
+SELECT Routes.ligne
+	FROM Routes
+	JOIN Arrets ON Routes.id_arret = Arrets.id
+	WHERE 
+			Routes.ordre_arret = 1
+		AND Arrets.commune = "Saint-Étienne";
+
+9.
+SELECT DISTINCT R1.ligne
+	FROM Routes AS R1 /* Start*/
+	JOIN Arrets AS A1 ON R1.id_arret = A1.id
+	JOIN Routes AS R2 ON R1.ligne = R2.ligne /* Stop */
+	JOIN Arrets AS A2 ON R2.id_arret = A2.id
+	WHERE
+			A1.nom = "Grand Gonnet"
+		AND A2.nom = "Terrasse";
+
+10.
+SELECT DISTINCT R1.id_arret
+	FROM Routes AS R1
+	JOIN Routes AS R2 IN R1.id_arret = R2.id_arret
+	WHERE R1.ligne = 2 AND R2.ligne = 3;
+
+11.
+SELECT DISTINCT Etude.id_arret
+	FROM Routes as Etude, Routes as Compare
+	WHERE Etude.ligne = 2 AND (Compare.ligne != 1 OR Compare.id_arret != Etude.id_arret) AND (Compare.ligne != 3 OR Compare.id_arret != Etude.id_arret);
+
+12.
+SELECT arret.id_arret
+	FROM Routes as origin, Routes as arret
+	JOIN Arrets ON origin.id_arret = Arrets.id
+	WHERE Arrets.nom = "Lycée Fauriel" AND origin.ligne = arret.ligne;
+
+13.
+SELECT DISTINCT arret.id_arret
+	FROM Routes as origin, Routes as corr, Routes as arret
+	JOIN Arrets ON origin.id_arret = Arrets.id
+	WHERE Arrets.nom = "Lycée Fauriel" AND origin.ligne = corr.ligne AND corr.ligne = arret.ligne;
+    
+14.
+Il faudrait alors modifier toutes les lignes de Arrets où commune = "Saint-Héand"
+La structure de la bdd est mal conçue car il y a trop de redondance d'information et donc bcp de source d'erreur
+Pour éviter la redondance d'information il faudrait créer une table Commune(idCommune INTEGER, Nom TEXT) et une table NomArret(idNomArret INTEGER, Nom TEXT) 
+car les villes sont répétées plusieurs fois et certains arrêts peuvent avoir des noms similaires (ex : l'arrêt Victor Hugo)

@@ -1,0 +1,30 @@
+1.
+Les clés primaire sont sur les attribus Eleves.idEleve, Devoirs.idDevoir
+Les clés étrangères sont Resultats.idEleve et Resultats.idDevoir
+
+5. SELECT Prenom FROM Eleves;
+6. SELECT Matiere FROM Devoirs;
+7. SELECT DISTINCT note FROM Resultats;
+8. SELECT DISTINCT Devoirs.Matiere FROM Resultats JOIN Devoirs ON Resultats.idDevoir = Devoirs.idDevoir WHERE Resultats.note >= 3;
+9. SELECT Eleves.Nom FROM Resultats JOIN Eleves ON Resultats.idEleve = Eleves.idEleve WHERE Resultats.idDevoir = 3 AND Resultats.note <=10;
+10. SELECT Eleves.Prenom FROM Resultats JOIN Eleves ON Resultats.idEleve = Eleves.idEleve WHERE Resultats.rang = 1;
+
+11.
+SELECT DISTINCT R1.idEleve 
+	FROM Resultats as R1 
+	JOIN Resultats as R2 ON R1.idEleve = R2.idEleve 
+	WHERE 
+			R1.idDevoir != R2.idDevoir 
+		AND R1.rang <=3 
+		AND R2.rang <= 3;
+
+12.
+SELECT DISTINCT R1.idEleve 
+	FROM Resultats as R1 
+	JOIN Resultats as R2 ON R1.idEleve = R2.idEleve 
+	WHERE 
+			R1.idDevoir != R2.idDevoir 
+		AND R1.idDevoir = 3 
+		AND R2.idDevoir = 7
+		AND R1.rang <=3
+		AND R2.rang >3

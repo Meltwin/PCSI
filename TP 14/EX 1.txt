@@ -1,0 +1,39 @@
+1.
+π_Nom(Client)
+SELECT Nom FROM Client
+
+2.
+σ_(Prix<10)(Produit)
+SELECT * FROM Produit WHERE Prix <= 10
+
+3.
+σ_(10<=Prix<=12)(Produit)
+SELECT * FROM Produit WHERE Prix >= 10 AND Prix <= 12
+
+4.
+π_(Prix)(σ_(Designation=Végétarienne)(Produit))
+SELECT Prix FROM Produit WHERE Designation == "Végétarienne"
+
+5.
+π_(Nom)(Client) U π_(Nom)(Livreur)
+SELECT Nom FROM Client UNION SELECT Nom FROM Livreur
+
+6.
+σ_(Kms>=10000)(Véhicule)
+SELECT * FROM Véhicules WHERE Kms >= 10000
+
+7.
+σ_(Livraison=NULL)(Commande)
+SELECT * FROM Commande WHERE Livraison IS NULL
+
+8.
+σ_(Heure>=17:00)(Commande)
+SELECT * FROM Commande WHERE Livraison >= "17:00"
+
+9.
+π_(Produit.Designation)(σ_(Commande.idClient=1)(σ_(Commande.idProduit=Produit.idProduit)(Commande x Produit)))
+SELECT Produit.Designation FROM Commande JOIN Produit ON Commande.idProduit = Produit.idProduit WHERE Commande.idClient = 1
+
+10.
+π_(Livreur.Nom,Livreur.Prénom)(σ_(Commande.idClient=1)(σ_(Commande.idLivreur=Livreur.idLivreur)(Commande x Livreur)))
+SELECT Livreur.Nom, Livreur.Prénom FROM Commande JOIN Livreur ON Commande.idLivreur = Livreur.idLivreur WHERE Commande.idClient = 1
