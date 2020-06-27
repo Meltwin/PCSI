@@ -139,7 +139,7 @@ class Game:
         self.fen.bind(keybind[2],lambda e : snake.execKey(3)) # Up
         self.fen.bind(keybind[3],lambda e : snake.execKey(1)) # Down
 
-        color = Game.COLOR_SET[len(self.snakes)+2]
+        color = Game.COLOR_SET[len(self.snakes)-1]
         snake.color = color
     # Apples
     def genNewApple(self):
